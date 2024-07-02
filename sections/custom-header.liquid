@@ -1,0 +1,148 @@
+{{ 'custom-header.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<style>
+  .custom-header-{{ section.id }} {
+    background-color: {{ section.settings.background_color }}
+  }
+
+  .custom-header-{{ section.id }} .menu-drawer__inner-container{
+    background-color: #F2F2F2;
+    box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+
+  }
+</style>
+
+<div class="custom-header custom-header-{{ section.id }}">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container menu-opening">
+    <summary
+      class="header__icon header__icon--menu header__icon--summary link focus-inset"
+      aria-label="Menu"
+      role="button"
+      aria-expanded="true"
+      aria-controls="menu-drawer"
+    >
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+          class="icon icon-hamburger"
+          fill="none"
+          viewBox="0 0 18 16"
+        >
+            <path d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z" fill="currentColor">
+          </path>
+        </svg>
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+          class="icon icon-close"
+          fill="none"
+          viewBox="0 0 18 17"
+        >
+            <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+          </path>
+        </svg>
+      </span>
+    </summary>
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-scheme-1">
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__content">
+          <div class="menu-drawer__header">
+            {{ section.settings.title }}
+          </div>
+
+          <div class="menu-drawer__button">
+            <a
+              href="{{ section.settings.button_link }}"
+              class="button button--{{ section.settings.button_style }}"
+            >
+              {{- section.settings.button_text -}}
+              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="12" viewBox="0 0 31 12" fill="none">
+                <path d="M1.36377 4.80469L0.61377 4.80469L0.613769 6.30469L1.36377 6.30469L1.36377 4.80469ZM30.184 6.08502C30.4768 5.79213 30.4768 5.31725 30.184 5.02436L25.411 0.251388C25.1181 -0.041505 24.6432 -0.041505 24.3503 0.251388C24.0574 0.544281 24.0574 1.01916 24.3503 1.31205L28.593 5.55469L24.3503 9.79733C24.0574 10.0902 24.0574 10.5651 24.3503 10.858C24.6432 11.1509 25.1181 11.1509 25.411 10.858L30.184 6.08502ZM1.36377 6.30469L29.6536 6.30469L29.6536 4.80469L1.36377 4.80469L1.36377 6.30469Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+  <div class="page-width custom-header-wrapper">
+    <div class="custom-header__logo">
+      <a href="{{ routes.root_url }}">
+        <img src="{{ section.settings.logo |  image_url: width: 152  }}" alt="Logo">
+      </a>
+    </div>
+    <div class="custom-header__content">
+      {{ section.settings.title }}
+    </div>
+    <div class="custom-header__button">
+      <a
+        href="{{ section.settings.button_link }}"
+        class="button button--{{ section.settings.button_style }}"
+      >
+        {{- section.settings.button_text -}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="12" viewBox="0 0 31 12" fill="none">
+          <path d="M1.36377 4.80469L0.61377 4.80469L0.613769 6.30469L1.36377 6.30469L1.36377 4.80469ZM30.184 6.08502C30.4768 5.79213 30.4768 5.31725 30.184 5.02436L25.411 0.251388C25.1181 -0.041505 24.6432 -0.041505 24.3503 0.251388C24.0574 0.544281 24.0574 1.01916 24.3503 1.31205L28.593 5.55469L24.3503 9.79733C24.0574 10.0902 24.0574 10.5651 24.3503 10.858C24.6432 11.1509 25.1181 11.1509 25.411 10.858L30.184 6.08502ZM1.36377 6.30469L29.6536 6.30469L29.6536 4.80469L1.36377 4.80469L1.36377 6.30469Z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom header",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F7F7F7"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom header",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}

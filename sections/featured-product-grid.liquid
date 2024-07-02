@@ -1,0 +1,130 @@
+{{ 'featured-product-grid.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+  @media screen and (min-width:750px) {
+    .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  }
+</style>
+
+<div class="featured-product-grid section-{{ section.id }}">
+  <div class="page-width">
+    <div class="section-header-title">
+      {{ section.settings.title }}
+    </div>
+    <div class="featured-product-grid-wrapper">
+      {% for block in section.blocks %}
+        <style>
+          .product-grid__focal-point--{{ block.id }}{
+            {% if block.settings.product.featured_image.presentation.focal_point != blank %}
+
+              left : {{ block.settings.product.featured_image.presentation.focal_point.x  }}%;
+              top : {{ block.settings.product.featured_image.presentation.focal_point.y  }}%;
+            {% else %}
+              left : 75%;
+              top : 25%;
+            {% endif %}
+          }
+        </style>
+        <div class="product-grid-item">
+          <div
+            class="product-grid-item__image"
+          >
+            <img
+              src="{{ block.settings.product.featured_image | image_url: width: 432  }}"
+              alt="{{ block.settings.product.title }}"
+            >
+            <div class="product-grid__focal-point product-grid__focal-point--{{ block.id }} ">+</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured product grid",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<p>Tisso vison in the wild</p>"
+    },
+    {
+      "type": "header",
+      "content": "padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product grid"
+    }
+  ]
+}
+{% endschema %}

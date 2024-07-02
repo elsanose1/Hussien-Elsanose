@@ -84,7 +84,7 @@
     </div>
   {%- elsif section.settings.image_2 == blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
     </div>
   {%- endif -%}
   {%- if section.settings.image_2 != blank -%}
@@ -145,6 +145,9 @@
                   class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
                 >
                   {{- block.settings.button_label_1 | escape -}}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
+                    <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
+                  </svg>
                 </a>
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank -%}
@@ -165,6 +168,18 @@
     </div>
   </div>
 </div>
+
+{% assign footer_block = section.blocks | where: 'type', 'footer' | first %}
+{% if footer_block != blank %}
+  <div class="banner-footer banner-footer-{{ footer_block.id }}">
+    {{ footer_block.settings.footer_text }}
+  </div>
+  <style>
+    .banner-footer-{{ footer_block.id }} {
+      background-color: {{ footer_block.settings.footer_background_color }};
+    }
+  </style>
+{% endif %}
 
 {% schema %}
 {
@@ -362,6 +377,25 @@
     }
   ],
   "blocks": [
+    {
+      "type": "footer",
+      "name": "Footer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "footer_background_color",
+          "label": "Footer background color",
+          "default": "#F5F5F5"
+        },
+        {
+          "type": "richtext",
+          "id": "footer_text",
+          "label": "Footer text",
+          "default": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>"
+        }
+      ]
+    },
     {
       "type": "heading",
       "name": "t:sections.image-banner.blocks.heading.name",
